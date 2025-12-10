@@ -48,6 +48,12 @@ _abbreviations = [
 ]
 
 
+def remove_lang_tags(text: str) -> str:
+    text = text.replace("(en)", " ")
+    text = text.replace("(vi)", " ")
+    return text
+
+
 def expand_abbreviations(text):
     for regex, replacement in _abbreviations:
         text = re.sub(regex, replacement, text)
@@ -119,4 +125,23 @@ def english_cleaners3(text):
     text = expand_abbreviations(text)
     phonemes = backend.phonemize([text], strip=True)[0]
     phonemes = collapse_whitespace(phonemes)
+    return phonemes
+
+
+def vietnamese_cleaners(text):
+    """Pipeline for Vietnamese text."""
+
+    text = lowercase(text)
+    text = collapse_whitespace(text)
+    phonemes = phonemize(
+        text,
+        language="vi",
+        backend="espeak",
+        strip=True,
+        preserve_punctuation=True,
+        with_stress=False,
+    )
+    phonemes = collapse_whitespace(phonemes)
+    phonemes = remove_lang_tags(phonemes)
+
     return phonemes
