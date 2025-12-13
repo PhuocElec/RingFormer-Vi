@@ -23,6 +23,7 @@ _vi_backend = EspeakBackend(
     preserve_punctuation=True,
     with_stress=False,
 )
+_lang_tag_re = re.compile(r"\([a-zA-Z\-]+\)")
 
 # Regular expression matching whitespace:
 _whitespace_re = re.compile(r"\s+")
@@ -133,8 +134,8 @@ def vietnamese_cleaners(text):
     phonemes = _vi_backend.phonemize(
         [text],
         strip=True,
-        language_switch='remove-flags',
-        words_mismatch='warn',
     )[0]
+    phonemes = re.sub(_lang_tag_re, "", phonemes)
+    phonemes = collapse_whitespace(phonemes)
 
     return phonemes
