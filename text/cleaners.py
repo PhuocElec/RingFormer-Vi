@@ -18,6 +18,11 @@ from phonemizer import phonemize
 from phonemizer.backend import EspeakBackend
 backend = EspeakBackend("en-us", preserve_punctuation=True, with_stress=True)
 
+_vi_backend = EspeakBackend(
+    "vi",
+    preserve_punctuation=True,
+    with_stress=False,
+)
 
 # Regular expression matching whitespace:
 _whitespace_re = re.compile(r"\s+")
@@ -125,15 +130,11 @@ def english_cleaners3(text):
 def vietnamese_cleaners(text):
     # text = lowercase(text)
     text = collapse_whitespace(text)
-    phonemes = phonemize(
-        text=text,
-        language='vi',
-        backend='espeak',
+    phonemes = _vi_backend.phonemize(
+        [text],
         strip=True,
-        preserve_punctuation=True,
-        with_stress=False,
         language_switch='remove-flags',
         words_mismatch='warn',
-    )
+    )[0]
 
     return phonemes
