@@ -123,7 +123,7 @@ def english_cleaners3(text):
 
 
 def vietnamese_cleaners(text):
-    text = lowercase(text)
+    # text = lowercase(text)
     text = collapse_whitespace(text)
     phonemes = phonemize(
         text=text,
