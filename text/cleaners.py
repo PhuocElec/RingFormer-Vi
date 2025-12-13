@@ -133,6 +133,7 @@ def vietnamese_cleaners(text):
         preserve_punctuation=True,
         with_stress=False,
         language_switch='remove-flags',
+        words_mismatch='remove',
     )
 
     return phonemes
