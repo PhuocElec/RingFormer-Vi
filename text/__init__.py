@@ -24,6 +24,7 @@ def text_to_sequence(text, cleaner_names):
             symbol_id = _symbol_to_id[symbol]
             sequence += [symbol_id]
         else:
+            print(f"Warning: Symbol '{symbol}' not found in symbols.py. Skipping.")
             continue
     return sequence
 
