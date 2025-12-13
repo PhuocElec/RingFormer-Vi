@@ -134,6 +134,7 @@ def vietnamese_cleaners(text):
         with_stress=False,
         language_switch='remove-flags',
         words_mismatch='remove',
+        njobs=1,
     )
 
     return phonemes
